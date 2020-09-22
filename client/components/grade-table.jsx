@@ -1,11 +1,11 @@
 import React from 'react';
 
 function Grade(props) {
-  if (!props.name) {
-    return (
-      <p>No grades recorded</p>
-    );
-  }
+  // if (!props.name) {
+  //   return (
+  //     <p>No grades recorded</p>
+  //   );
+  // }
   return (
     <tr>
       <td>{props.name}</td>
@@ -17,7 +17,7 @@ function Grade(props) {
 
 function GradeTable(props) {
   return (
-    <table className="table table-striped table-dark">
+    <table className="table table-striped table-dark col-8 mr-5">
       <thead>
         <tr>
           <th scope="col">Student Name</th>
@@ -26,17 +26,16 @@ function GradeTable(props) {
         </tr>
       </thead>
       <tbody>
-        {
-          props.grades.map(grades => {
-            return (
-              <Grade
-                key={grades.id}
-                name={grades.name}
-                course={grades.course}
-                grade={grades.grade} />
-            );
-          })
-        }
+        {props.grades.map(grades => {
+          return (
+            <Grade
+              key={grades.id}
+              name={grades.name}
+              course={grades.course}
+              grade={grades.grade}
+            />
+          );
+        })}
       </tbody>
     </table>
   );
