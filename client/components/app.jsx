@@ -27,7 +27,7 @@ class App extends React.Component {
     let sum = 0;
     let average = 0;
     for (let i = 0; i < this.state.grades.length; i++) {
-      sum += this.state.grades[i].id;
+      sum += this.state.grades[i].grade;
       average = sum / this.state.grades.length;
     }
     average.toString();
