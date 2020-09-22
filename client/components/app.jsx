@@ -38,9 +38,9 @@ class App extends React.Component {
     return (
       <div className="container">
         <div className="row">
-          <PageHeader text="Studet Grade Table" getAverageGrade={this.getAverageGrade} />
+          <PageHeader text="Studet Grade Table" getAverageGrade={this.getAverageGrade()} />
           <GradeTable grades={this.state.grades} />
-        </div>
+        </div>)
       </div>
     );
   }
