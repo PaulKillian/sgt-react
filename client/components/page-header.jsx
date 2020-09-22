@@ -1,8 +1,11 @@
 import React from 'react';
 
-function PageHeader(averageGrade) {
+function PageHeader(props) {
   return (
-    <h1 className="col-8">{ averageGrade.text }</h1>
+    <div className="d-flex col-12">
+      <h1 className="col-9">{ props.text }</h1>
+      <h3 className="d-flex col-3 mt-3 justify-content-around">Average Grade<span className="badge badge-secondary"> {props.getAverageGrade()}</span></h3>
+    </div>
   );
 }
 
