@@ -1,16 +1,12 @@
 import React from 'react';
 
 function Grade(props) {
-  // if (!props.name) {
-  //   return (
-  //     <p>No grades recorded</p>
-  //   );
-  // }
   return (
     <tr>
       <td>{props.name}</td>
       <td>{props.course}</td>
       <td>{props.grade}</td>
+      <td><button onClick={() => props.deleteGrade()}>Delete</button></td>
     </tr>
   );
 }
@@ -23,6 +19,7 @@ function GradeTable(props) {
           <th scope="col">Student Name</th>
           <th scope="col">Course</th>
           <th scope="col">Grade</th>
+          <th scope="col">Operations</th>
         </tr>
       </thead>
       <tbody>
@@ -33,6 +30,7 @@ function GradeTable(props) {
               name={grades.name}
               course={grades.course}
               grade={grades.grade}
+              deleteGrade={() => props.deleteGrade(grades.id)}
             />
           );
         })}

@@ -12,6 +12,7 @@ class App extends React.Component {
     this.getAllGrades = this.getAllGrades.bind(this);
     this.getAverageGrade = this.getAverageGrade.bind(this);
     this.addNewGrade = this.addNewGrade.bind(this);
+    this.deleteGrade = this.deleteGrade.bind(this);
   }
 
   componentDidMount() {
@@ -39,29 +40,70 @@ class App extends React.Component {
       }).catch(err => console.error(err));
   }
 
+  deleteGrade(gradeId) {
+    let index = 0;
+    for (let i = 0; i < this.state.grades.length; i++) {
+      if (this.state.grades[i].id === gradeId) {
+        index = i;
+      }
+    }
+    fetch(`/api/grades/${gradeId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify()
+    }).then(res => res.json())
+      .then(deleteGrade => {
+        const newGrades = this.state.grades.slice();
+        newGrades.splice(index, 1);
+        this.setState({ grades: newGrades });
+      }).catch(err => console.error(err));
+  }
+
   getAverageGrade() {
     let sum = 0;
-    let average = 0;
     for (let i = 0; i < this.state.grades.length; i++) {
-      sum += this.state.grades[i].grade;
-      average = sum / this.state.grades.length;
+      const grade = parseInt(this.state.grades[i].grade);
+      sum += grade;
     }
-    return Math.round(average);
+    sum = sum / this.state.grades.length;
+    if (!this.state.grades.name) {
+      return 0;
+    } else {
+      return Math.round(sum);
+    }
   }
 
   render() {
-    return (
-      <div className="container">
-        <div className="row">
-          <PageHeader
-            text="Studet Grade Table"
-            getAverageGrade={this.getAverageGrade()}
-          />
-          <GradeTable grades={this.state.grades} />
-          <GradeForm onSubmit={this.addNewGrade} />
+    if (this.state.grades.length === 0) {
+      return (
+        <div className="container">
+          <div className="row">
+            <PageHeader
+              text="Studet Grade Table"
+              getAverageGrade={this.getAverageGrade()}
+            />
+            <GradeTable grades={this.state.grades} deleteGrade={this.deleteGrade} />
+            <GradeForm onSubmit={this.addNewGrade} />
+          </div>
+          <p>No grades recorded</p>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className="container">
+          <div className="row">
+            <PageHeader
+              text="Studet Grade Table"
+              getAverageGrade={this.getAverageGrade()}
+            />
+            <GradeTable grades={this.state.grades} deleteGrade={this.deleteGrade} />
+            <GradeForm onSubmit={this.addNewGrade} />
+          </div>
+        </div>
+      );
+    }
   }
 }
 
